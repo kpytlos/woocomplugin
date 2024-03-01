@@ -1,0 +1,35 @@
+/*Contains everything, all products, that's why grid*/
+.product-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 10px;
+}
+/*Product-box Individual box with all the info*/
+.product-box {
+  margin-bottom: 30px;
+  display: grid;
+  grid-auto-rows: auto 1fr auto;
+}
+.product-box p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.product-box h6 {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+/*Contains single elements like the img h and price*/
+.product-info {
+  display: grid;
+  grid-auto-rows: auto 1fr auto;
+  text-decoration: none;
+}
+
+/**/
+.product-image {
+  width: 19vw; /* You can adjust width as needed */
+  height: 300px;
+  aspect-ratio: 1 / 1; /* Square aspect ratio */
+  object-fit: cover; /* Ensures image fills the whole area while maintaining aspect ratio */
+}

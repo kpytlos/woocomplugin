@@ -78,10 +78,17 @@ add_shortcode('all_products_mypluginlast', 'get_all_woocommerce_products_shortco
 // Enqueue plugin styles
 function enqueue_plugin_styles() {
   wp_enqueue_style(
-      'myplugin-category-filter-styles', 
-      plugin_dir_url( __FILE__ ) . 'assets/category-filter.css', // Adjust path based on your folder structure
-      array(), 
-      '1.2.3' // Version for cache-busting
+    'myplugin-category-filter-styles',
+    plugin_dir_url(__FILE__) . 'assets/category-filter.css',
+    array(),
+    '1.2.3'
+  );
+
+  wp_enqueue_style(
+    'myplugin-product-grid-styles',
+    plugin_dir_url(__FILE__) . 'assets/product-grid.css',
+    array(),
+    '1.0.0'
   );
 }
 add_action('wp_enqueue_scripts', 'enqueue_plugin_styles');

@@ -20,7 +20,7 @@ function display_product_categories($categories) {
       $output = ''; // Initialize an empty string to store the generated HTML
 
       // Create a container element for the category list
-      $output .= '<div class="product-categories">';
+      $output .= '<div class="product-categories-list">';
 
       // Create an unordered list element to hold the individual categories
       $output .= '<ul class="categories-yo">';
