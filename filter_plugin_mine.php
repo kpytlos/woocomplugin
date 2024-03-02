@@ -5,7 +5,7 @@ $plugin_path = plugin_dir_path( __FILE__ ); // Get the absolute path to the plug
 // Include Required Files
 require_once( $plugin_path . 'includes/category-retrieval-display.php' ); // Include functions for categories
 require_once( $plugin_path . 'includes/product-filtering-retrieval.php' ); // Include functions for product filtering
-require_once( $plugin_path . 'includes/product-display-function.php' ); // Include function for product display
+require_once( $plugin_path . 'includes/product-display-grid.php' ); // Include function for product display
 require_once( $plugin_path . 'includes/price-component.php' ); 
 
 //Main Function for Shortcode
@@ -36,6 +36,13 @@ function enqueue_plugin_styles() {
   wp_enqueue_style(
     'myplugin-product-grid-styles',
     plugin_dir_url(__FILE__) . 'assets/product-grid.css',
+    array(),
+    '1.0.0'
+  );
+
+  wp_enqueue_style(
+    'product-details-button',
+    plugin_dir_url(__FILE__) . 'assets/product-details-button.css',
     array(),
     '1.0.0'
   );

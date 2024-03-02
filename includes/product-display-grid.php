@@ -19,8 +19,11 @@ function display_products($products) {
           $has_single_price = is_a($product, 'WC_Product_Simple'); // Check if product is a simple product
 
 
-          $output .= '<a href="' . $product_link . '" class="product-info">';
-          $output .= str_replace('<img ', '<img class="product-image" ', $product_image);
+          $output .= '<a href="' . $product_link . '" class="product-info-link">';
+          $output .= '<div class="product-image-wrapper">';
+            $output .= str_replace('<img ', '<img class="product-image" ', $product_image);
+          $output .= '</div>';
+          $output .= '<div class="details-button">See details</div>'; // Add the "See details" button
           $output .= '<h6>' . $product_title . '</h6>'; 
           $output .= display_price($product_price, $has_single_price); // Display the product price
           // ... add more information or interactive elements if needed

@@ -1,0 +1,18 @@
+.details-button {
+  position: absolute; /* Position the button absolutely */
+  top: 40%; /* Align the top of the button to the middle of the parent container */
+  left: 50%; /* Align the left of the button to the middle of the parent container */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Center the button horizontally and vertically */
+  background-color: black;
+  color: white;
+  padding: 10px 10px 10px 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+.product-box:hover .details-button {
+  opacity: 1; /* Show the button on hover */
+}

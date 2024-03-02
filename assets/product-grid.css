@@ -9,6 +9,7 @@
   margin-bottom: 30px;
   display: grid;
   grid-auto-rows: auto 1fr auto;
+  position: relative; /* For the middle placement of the button */
 }
 .product-box p {
   margin-top: 0px;
@@ -16,20 +17,33 @@
 }
 
 .product-box h6 {
-  margin-top: 10px;
+  margin-top: 5px;
   margin-bottom: 0px;
 }
 /*Contains single elements like the img h and price*/
-.product-info {
+.product-info-link {
   display: grid;
   grid-auto-rows: auto 1fr auto;
   text-decoration: none;
 }
 
-/**/
-.product-image {
+.product-image-wrapper {
   width: 19vw; /* You can adjust width as needed */
   height: 300px;
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  overflow: hidden; /*for the image to stay the same size */
+  width: 100%;
+}
+/**/
+.product-image {
   aspect-ratio: 1 / 1; /* Square aspect ratio */
   object-fit: cover; /* Ensures image fills the whole area while maintaining aspect ratio */
+  transition: transform 0.3s ease-in-out; /* Add smooth zoom transition */
+}
+
+.product-image-wrapper:hover .product-image {
+  transform: scale(1.1); /* Zoom on hover */
+  filter: brightness(0.7);
 }
