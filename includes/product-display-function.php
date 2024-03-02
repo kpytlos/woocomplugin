@@ -1,4 +1,5 @@
 <?php
+include_once('price-component.php');
 
 function display_products($products) {
   if ($products) {
@@ -14,10 +15,14 @@ function display_products($products) {
           $product_image = $product->get_image(); // Get the product image (default is thumbnail)
           $product_link = get_permalink($product->get_id());
 
+          // Check for single price
+          $has_single_price = is_a($product, 'WC_Product_Simple'); // Check if product is a simple product
+
+
           $output .= '<a href="' . $product_link . '" class="product-info">';
           $output .= str_replace('<img ', '<img class="product-image" ', $product_image);
           $output .= '<h6>' . $product_title . '</h6>'; 
-          $output .= '<p class="product-price">' . wc_price($product_price) . '</p>'; // Price with class
+          $output .= display_price($product_price, $has_single_price); // Display the product price
           // ... add more information or interactive elements if needed
           $output .= '</a>'; // Close anchor tag
 
