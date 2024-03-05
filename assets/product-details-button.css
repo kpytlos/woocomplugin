@@ -6,11 +6,12 @@
     -50%,
     -50%
   ); /* Center the button horizontally and vertically */
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
   padding: 10px 10px 10px 10px;
   opacity: 0;
   transition: opacity 0.3s ease; /* Smooth transition for opacity */
+  white-space: nowrap;
 }
 
 .product-box:hover .details-button {

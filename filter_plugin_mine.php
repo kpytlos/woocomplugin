@@ -1,4 +1,12 @@
 <?php
+/**
+* Plugin Name: custom shop
+* Description: Test.
+* Version: 1
+* Author: Chris
+**/
+
+
 // Define Plugin Path
 $plugin_path = plugin_dir_path( __FILE__ ); // Get the absolute path to the plugin's directory
 
@@ -7,6 +15,7 @@ require_once( $plugin_path . 'includes/category-retrieval-display.php' ); // Inc
 require_once( $plugin_path . 'includes/product-filtering-retrieval.php' ); // Include functions for product filtering
 require_once( $plugin_path . 'includes/product-display-grid.php' ); // Include function for product display
 require_once( $plugin_path . 'includes/price-component.php' ); 
+require_once( $plugin_path . 'includes/related-products-component.php' ); 
 
 //Main Function for Shortcode
 function get_all_woocommerce_products_shortcode($atts) {
@@ -35,7 +44,7 @@ function enqueue_plugin_styles() {
 
   wp_enqueue_style(
     'myplugin-product-grid-styles',
-    plugin_dir_url(__FILE__) . 'assets/product-grid.css',
+    plugin_dir_url(__FILE__) . 'assets/product-display-grid.css',
     array(),
     '1.0.0'
   );
@@ -43,6 +52,13 @@ function enqueue_plugin_styles() {
   wp_enqueue_style(
     'product-details-button',
     plugin_dir_url(__FILE__) . 'assets/product-details-button.css',
+    array(),
+    '1.0.0'
+  );
+
+  wp_enqueue_style(
+    'related-products-component',
+    plugin_dir_url(__FILE__) . 'assets/related-products-component.css',
     array(),
     '1.0.0'
   );

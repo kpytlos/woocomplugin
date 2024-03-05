@@ -1,0 +1,24 @@
+.related-product-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 10px;
+}
+
+.related-product-box {
+  position: relative; /* For the middle placement of the button */
+  text-align: center;
+  /*margin-bottom: 30px;
+  display: grid;
+  grid-auto-rows: auto 1fr auto;*/
+}
+
+.related-product-info-link {
+  display: grid;
+  grid-auto-rows: auto 1fr auto;
+  text-decoration: none;
+}
+
+/*.related-product-image-wrapper {
+}
+.related-product-image {
+}*/
