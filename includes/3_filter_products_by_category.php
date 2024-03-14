@@ -17,9 +17,7 @@ function filter_products_by_category($selected_category) {
   return new WC_Product_Query($args); // Return a new WC_Product_Query object based on the constructed arguments
 }
 
-function get_filtered_products($products_query) {
-  return $products_query->get_products(); // Call the get_products() method of the WC_Product_Query object to retrieve the filtered products based on the query parameters.
-}
+
 
 
 

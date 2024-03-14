@@ -1,20 +1,5 @@
 <?php
 
-function get_product_categories() {
-  $categories = get_terms(array(
-      'taxonomy' => 'product_cat',
-      'hide_empty' => true,
-  ));
-
-  // Add a custom "All" category
-  $all_category = new stdClass();
-  $all_category->slug = 'all';
-  $all_category->name = 'All';
-  array_unshift($categories, $all_category);
-
-  return $categories;
-}
-
 function display_product_categories($categories) {
   if ($categories) {
       $output = ''; // Initialize an empty string to store the generated HTML

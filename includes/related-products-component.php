@@ -1,117 +1,59 @@
 <?php
-/*include_once('price-component.php');
 
-// Define shortcode function to display related products based on category
-function related_products_shortcode($atts) {
-    // Extract shortcode attributes, if any
-    $atts = shortcode_atts(array(
-        'count' => 6, // Default number of related products to display
-    ), $atts, 'related_products');
+add_shortcode( 'related_products_yolo', 'get_related_products_shortcode' );
 
-    $product_id = get_the_ID();
-    $categories = wp_get_post_terms($product_id, 'product_cat');
+function get_related_products_shortcode( $atts ) {
+    // Initialize output variable
+    $output = '';
 
-    // If product belongs to multiple categories, get the first one
-    $category_id = !empty($categories) ? $categories[0]->term_id : 0;
+    // Get current product information
+    $current_product = wc_get_product();
 
-    // Query for related products based on the category
-    $related_products_args = array(
-        'post_type' => 'product',
-        'posts_per_page' => $atts['count'],
-        'post_status' => 'publish',
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'product_cat',
-                'field' => 'term_id',
-                'terms' => $category_id,
-            ),
-        ),
-        'orderby' => 'rand', // Show random related products
-        'exclude' => $product_id, // Exclude the current product
-    );
+    // Check if a product is found
+    if ( $current_product ) {
+        $product_category_ids = wp_get_post_terms( $current_product->get_id(), 'product_cat', array( 'fields' => 'ids' ) );
 
-    $related_products_query = new WP_Query($related_products_args);
+        // Define arguments for related products query
+        $args = array(
+            'post_type' => 'product',
+            'post_status' => 'publish',
+            'post__not_in' => array( $current_product->get_id() ), // Exclude current product
+            'posts_per_page' => 4, // Adjust as needed
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'product_cat',
+                    'field' => 'term_id',
+                    'operator' => 'IN',
+                    'terms' => $product_category_ids,
+                )
+            )
+        );
 
-    // Generate HTML for related products
-    $output = '<div class="related-product-container">'; // Start the product container element
-    if ($related_products_query->have_posts()) {
-        while ($related_products_query->have_posts()) {
-            $related_products_query->the_post();
-            global $product;
-            // Generate HTML for each related product
-            $output .= '<div class="related-product-box">';
-            $product_link = get_permalink($product->get_id());
-            
-            $output .= '<a href="' . $product_link . '" class="related-product-info-link">';
-            $output .= '<div class="product-image-wrapper">';
-            $output .= str_replace('<img ', '<img class="product-image" ', $product->get_image());
-            $output .= '</div>';
-            $output .= '<div class="details-button">See details</div>'; // Add the "See details" button
-            $output .= '<h6>' . $product->get_name() . '</h6>'; 
-            $output .= display_price($product->get_price(), is_a($product, 'WC_Product_Simple')); // Display the product price
-            $output .= '</a>'; // Close anchor tag
-            $output .= '</div>'; // End the individual product element
+        // Query related products
+        $related_products = new WP_Query( $args );
+
+        // Check if products are found
+        if ( $related_products->have_posts() ) {
+            $output .= '<div class="related-container">';
+            $output .= '<div class="product-container">'; // Concatenating the opening div
+
+            // Loop through products and display them
+            while ( $related_products->have_posts() ) {
+                $related_products->the_post();
+                $product = wc_get_product(); // Get current product object inside the loop
+
+                // Call the display_product function and append its output to $output
+                $output .= single_product_display( $product );
+            }
+
+            $output .= '</div>'; // Closing product container div
+            $output .= '</div>'; // Closing related container div
         }
-        wp_reset_postdata(); // Reset post data
+
+        wp_reset_postdata();
     } else {
-        $output .= '<p>No related products found.</p>';
+        $output = '<p>No related products found.</p>';
     }
-    $output .= '</div>'; // End the product container element
-    
 
     return $output;
 }
-
-// Register the shortcode
-add_shortcode('related_products_321', 'related_products_shortcode');*/
-
-// Define shortcode function to display related products based on category
-function related_products_shortcode($atts) {
-    // Extract shortcode attributes, if any
-    $atts = shortcode_atts(array(
-        'count' => 6, // Default number of related products to display
-        'category' => '', // Default category
-    ), $atts, 'related_products');
-
-    // Get the category slug from the shortcode attribute
-    $category_slug = sanitize_title($atts['category']);
-
-    // Retrieve products filtered by category
-    $products_query = filter_products_by_category($category_slug);
-
-    // Get filtered products
-    $products = get_filtered_products($products_query);
-
-    // Generate HTML for related products
-    $output = '<div class="related-product-container">'; // Start the product container element
-    if ($products) {
-        foreach ($products as $product) {
-            // Generate HTML for each related product
-            $product_link = get_permalink($product->get_id());
-            $output .= '<div class="related-product-box">';
-            $output .= '<a href="' . $product_link . '" class="related-product-info-link">';
-            $output .= '<div class="product-image-wrapper">';
-            $output .= str_replace('<img ', '<img class="product-image" ', $product->get_image());
-            $output .= '</div>';
-            $output .= '<div class="details-button">See details</div>'; // Add the "See details" button
-            $output .= '<h6>' . $product->get_name() . '</h6>'; 
-            $output .= display_price($product->get_price(), is_a($product, 'WC_Product_Simple')); // Display the product price
-            $output .= '</a>'; // Close anchor tag
-            $output .= '</div>'; // End the individual product element
-        }
-    } else {
-        $output .= '<p>No related products found.</p>';
-    }
-    $output .= '</div>'; // End the product container element
-
-    return $output;
-}
-
-
-// Register the shortcode
-add_shortcode('related_products_321', 'related_products_shortcode');
-
-
-
-
-

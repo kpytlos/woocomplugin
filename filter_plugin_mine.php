@@ -11,11 +11,13 @@
 $plugin_path = plugin_dir_path( __FILE__ ); // Get the absolute path to the plugin's directory
 
 // Include Required Files
-require_once( $plugin_path . 'includes/category-retrieval-display.php' ); // Include functions for categories
-require_once( $plugin_path . 'includes/product-filtering-retrieval.php' ); // Include functions for product filtering
-require_once( $plugin_path . 'includes/product-display-grid.php' ); // Include function for product display
+require_once( $plugin_path . 'includes/1_get_product_categories.php' );
+require_once( $plugin_path . 'includes/2_display_product_categories.php' ); // Include functions for categories
+require_once( $plugin_path . 'includes/3_filter_products_by_category.php' ); // Include functions for product filtering
+require_once( $plugin_path . 'includes/render_product_display_list.php' ); // Include function for product display
 require_once( $plugin_path . 'includes/price-component.php' ); 
 require_once( $plugin_path . 'includes/related-products-component.php' ); 
+require_once( $plugin_path . 'includes/single_product_display.php' );  
 
 //Main Function for Shortcode
 function get_all_woocommerce_products_shortcode($atts) {
@@ -25,7 +27,7 @@ function get_all_woocommerce_products_shortcode($atts) {
   $output .= display_product_categories($categories); // Call function to display category list with links
   $products_query = filter_products_by_category($selected_category); // Create a WC_Product_Query object with category filter if applicable
   $products = get_filtered_products($products_query); // Retrieve filtered products based on the query
-  $output .= display_products($products); // Call function to display filtered product listings
+  $output .= render_product_list($products); // Call function to display filtered product listings
 
   return $output; // Return the complete HTML output string
 }
@@ -62,5 +64,7 @@ function enqueue_plugin_styles() {
     array(),
     '1.0.0'
   );
+
+
 }
 add_action('wp_enqueue_scripts', 'enqueue_plugin_styles');
